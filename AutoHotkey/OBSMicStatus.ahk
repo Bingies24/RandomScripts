@@ -24,6 +24,18 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #Requires AutoHotkey v2.0.18+
 #Include %A_AhkPath%/../lib/OBSWebSocket.ahk ; You can get it here: https://github.com/5ony/OBSWebSocketAHK
 
+OBSPID := 'obs64.exe'
+OBSPathStart := "C:\Program Files\obs-studio\bin\64bit"
+OBSPathTarget := "C:\Program Files\obs-studio\bin\64bit\obs64.exe"
+
+for i, param in A_Args
+{
+    if (param == "launchOBS" and !ProcessExist(OBSPID))
+    {
+        Run OBSPathTarget, OBSPathStart, , &OBSPID
+    }
+}
+
 IconUnmuted := "image path"
 IconMuted := "image path"
 IconGUI := Gui("+AlwaysOnTop -Caption +E0x20")
@@ -61,11 +73,13 @@ To get the values need for this part, in OBS, go to Tools > WebSocket Server set
 Make sure the server is enabled and click "Show Connect Info."
 */
 OBS := OBSC("ws://ip:port/", "password", OBSC.EventSubscription.Inputs)
-OBSWindow := 'ahk_exe obs64.exe'
 
-if WinExist(OBSWindow) {
-    Loop {
-        if !WinExist(OBSWindow) {
+if ProcessExist(OBSPID)
+{
+    Loop
+    {
+        if !ProcessExist(OBSPID)
+        {
             break
         }
     }
