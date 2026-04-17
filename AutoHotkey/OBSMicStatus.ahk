@@ -33,6 +33,7 @@ for i, param in A_Args
     if (param == "launchOBS" and !ProcessExist(OBSPID))
     {
         Run OBSPathTarget, OBSPathStart, , &OBSPID
+        Sleep 3000 ; This is to make sure OBSWebSocket has time to be ready in order to prevent a 207 error on launch.
     }
 }
 
